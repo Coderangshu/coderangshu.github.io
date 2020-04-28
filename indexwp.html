@@ -1,6 +1,6 @@
 <html>
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
     <script src="webcam.js"></script>
     <script src="rps-dataset.js"></script>
 </head>
@@ -10,12 +10,24 @@
             <video autoplay playsinline muted id="wc" width="224" height="224"></video>
         </div>
     </div>
+    <div id="dummy1">
+        <p>
+            Hello!! I am just a humble hand gesture predictor.<br>
+            As you can see I have 5 classes to predict.<br>
+            When you click each button you need to place your hand in front of the camera for me to learn what each of these gestures are.<br>For each class I will take 25 sample photos each at an inteval of 1 second.<br>
+            Please help me learn the gestures than I assure you I will try my best to predict the gestures shown by you.
+        </p>
+    </div>
     <button type="button" id="0" onclick="handleButton(this)" >Rock</button>
 	<button type="button" id="1" onclick="handleButton(this)" >Paper</button>
 	<button type="button" id="2" onclick="handleButton(this)" >Scissors</button>
+    <button type="button" id="3" onclick="handleButton(this)" >Spock</button>
+	<button type="button" id="4" onclick="handleButton(this)" >Lizard</button>
 	<div id="rocksamples">Rock Samples:</div>
 	<div id="papersamples">Paper Samples:</div>
 	<div id="scissorssamples">Scissors Samples:</div>
+    <div id="spocksamples">Spock Samples:</div>
+	<div id="lizardsamples">Lizard Samples:</div>
 	<button type="button" id="train" onclick="doTraining()" >Train Network</button>
     <div id="dummy">Once training is complete, click 'Start Predicting' to see predictions, and 'Stop Predicting' to end predicting.</div>
 	<button type="button" id="startPredicting" onclick="startPredicting()" >Start Predicting</button>

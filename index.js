@@ -2,7 +2,7 @@ let mobilenet;
 let model;
 const webcam=new Webcam(document.getElementById('wc'));
 const dataset = new RPSDataset();
-var rockSamples=0, paperSamples=0, scissorsSamples=0;
+var rockSamples=0, paperSamples=0, scissorsSamples=0, spockSamples=0, lizardSamples=0;
 
 async function loadMobileNet()
 {
@@ -21,15 +21,15 @@ async function init()
 async function train()
 {
   dataset.ys = null;
-  dataset.encodeLabels(3);
+  dataset.encodeLabels(5);
   model = tf.sequential({
     layers: [
       tf.layers.flatten({inputShape: mobilenet.outputs[0].shape.slice(1)}),
       tf.layers.dense({ units: 128, activation: 'relu'}),
-      tf.layers.dense({ units: 3, activation: 'softmax'})
+      tf.layers.dense({ units: 5, activation: 'softmax'})
     ]
   });
-  const optimizer = tf.train.adam(0.001);
+  const optimizer = tf.train.adam(0.0001);
   model.compile({optimizer: optimizer, loss: 'categoricalCrossentropy'});
   let loss = 0;
   model.fit(dataset.xs, dataset.ys,
@@ -70,6 +70,12 @@ async function predict()
 		case 2:
 			predictionText = "I see Scissors";
 			break;
+        case 3:
+			predictionText = "I see Spock";
+			break;
+		case 4:
+			predictionText = "I see Lizard";
+			break;
 	}
 	document.getElementById("prediction").innerText = predictionText;
 			
@@ -96,24 +102,42 @@ function stopPredicting(){
 
 function handleButton(elem)
 {
-	switch(elem.id)
+    for (let i=0; i<25; i++)
     {
-		case "0":
-			rockSamples++;
-			document.getElementById("rocksamples").innerText = "Rock samples:" + rockSamples;
-			break;
-		case "1":
-			paperSamples++;
-			document.getElementById("papersamples").innerText = "Paper samples:" + paperSamples;
-			break;
-		case "2":
-			scissorsSamples++;
-			document.getElementById("scissorssamples").innerText = "Scissors samples:" + scissorsSamples;
-			break;
-	}
-	label = parseInt(elem.id);
-	const img = webcam.capture();
-	dataset.addExample(mobilenet.predict(img), label);
+        task(elem,i);
+    }
+}
+function task(elem,i)
+{
+    setTimeout(function()
+               {
+        switch(elem.id)
+        {
+            case "0":
+                rockSamples++;
+                document.getElementById("rocksamples").innerText = "Rock samples:" + rockSamples;
+                break;
+            case "1":
+                paperSamples++;
+                document.getElementById("papersamples").innerText = "Paper samples:" + paperSamples;
+                break;
+            case "2":
+                scissorsSamples++;
+                document.getElementById("scissorssamples").innerText = "Scissors samples:" + scissorsSamples;
+                break;
+            case "3":
+                spockSamples++;
+                document.getElementById("spocksamples").innerText = "Spock samples:" + spockSamples;
+                break;
+            case "4":
+                lizardSamples++;
+                document.getElementById("lizardsamples").innerText = "Scissors samples:" + lizardSamples;
+                break;
+        }
+        label = parseInt(elem.id);
+        const img = webcam.capture();
+        dataset.addExample(mobilenet.predict(img), label);
+    },1000*i);   
 }
 
 init();
