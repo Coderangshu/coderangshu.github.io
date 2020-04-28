@@ -46,9 +46,52 @@ async function train()
   });
 }
 
+async function predict()
+{
+  while (isPredicting)
+  {
+    const predictedClass = tf.tidy(() =>
+                                   {
+        const img = webcam.capture();
+        const activation = mobilenet.predict(img);
+        const predictions = model.predict(activation);
+        return predictions.as1D().argMax();
+    });
+    const classId = (await predictedClass.data())[0];
+    var predictionText = "";
+    switch(classId)
+    {
+		case 0:
+			predictionText = "I see Rock";
+			break;
+		case 1:
+			predictionText = "I see Paper";
+			break;
+		case 2:
+			predictionText = "I see Scissors";
+			break;
+	}
+	document.getElementById("prediction").innerText = predictionText;
+			
+    
+    predictedClass.dispose();
+    await tf.nextFrame();
+  }
+}
+
 function doTraining(){
 	train();
     alert("Training is done, try out by clicking on the start predicting button to let the browser decide your gestures!");
+}
+
+function startPredicting(){
+	isPredicting = true;
+	predict();
+}
+
+function stopPredicting(){
+	isPredicting = false;
+	predict();
 }
 
 function handleButton(elem)
