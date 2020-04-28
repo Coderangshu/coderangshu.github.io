@@ -1,22 +1,16 @@
 <html>
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <script src="webcam.js"></script>
-    <script src="rps-dataset.js"></script>
-</head>
-<body>
-    <div>
-        <div>
-            <video autoplay playsinline muted id="wc" width="224" height="224"></video>
-        </div>
-    </div>
-    <button type="button" id="0" onclick="handleButton(this)" >Rock</button>
-	<button type="button" id="1" onclick="handleButton(this)" >Paper</button>
-	<button type="button" id="2" onclick="handleButton(this)" >Scissors</button>
-	<div id="rocksamples">Rock Samples:</div>
-	<div id="papersamples">Paper Samples:</div>
-	<div id="scissorssamples">Scissors Samples:</div>
-	<button type="button" id="train" onclick="doTraining()" >Train Network</button>
-</body>
-<script src="index.js"></script>
+    <head>
+        <link rel="stylesheet" type="text/css" href="mystyle.css">
+        <H1>Welcome to My Page</H1>
+        <p>Hey There Want to Try Something on Machine Learning?.<br>Try out some of the hottest applications of machine learning!!</p>
+    </head>
+    <body>
+        <button onclick="document.location='mnist.html'">MNIST</button>
+        <br>
+        <br>
+        <button onclick="document.location='fashion-mnist.html'">Fashion MNIST</button>
+        <br>
+        <br>
+        <button onclick="document.location='indexwp.html'">ROCK PAPER SCISSOR</button>
+    </body>
 </html>
