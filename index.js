@@ -102,7 +102,7 @@ function stopPredicting(){
 
 function handleButton(elem)
 {
-    for (let i=0; i<25; i++)
+    for (let i=0; i<50; i++)
     {
         task(elem,i);
     }
@@ -137,7 +137,7 @@ function task(elem,i)
         label = parseInt(elem.id);
         const img = webcam.capture();
         dataset.addExample(mobilenet.predict(img), label);
-    },1000*i);   
+    },500*i);   
 }
 
 init();
